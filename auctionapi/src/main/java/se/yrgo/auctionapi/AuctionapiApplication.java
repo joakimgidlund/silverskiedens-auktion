@@ -1,0 +1,13 @@
+package se.yrgo.auctionapi;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class AuctionapiApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(AuctionapiApplication.class, args);
+	}
+
+}
