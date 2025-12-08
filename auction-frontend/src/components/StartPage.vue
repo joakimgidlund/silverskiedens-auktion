@@ -1,9 +1,11 @@
 <script setup lang="ts">
+
+
+
 </script>
 
 <template>
-  <Button label="Submit"></Button>
+
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>
