@@ -12,7 +12,14 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     Button: typeof import('primevue/button')['default']
+    Form: typeof import('@primevue/forms/form')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
-    StartPage: typeof import('./src/components/StartPage.vue')['default']
+    InputText: typeof import('primevue/inputtext')['default']
+    LoginForm: typeof import('./src/components/LoginForm.vue')['default']
+    Message: typeof import('primevue/message')['default']
+    Password: typeof import('primevue/password')['default']
+    RegisterForm: typeof import('./src/components/RegisterForm.vue')['default']
+    RouterLink: typeof import('vue-router')['RouterLink']
+    RouterView: typeof import('vue-router')['RouterView']
   }
 }
