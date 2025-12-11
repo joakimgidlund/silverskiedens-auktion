@@ -28,6 +28,7 @@ public class JwtService {
         return Jwts.builder()
                    .claims(claims)
                    .subject(username)
+                   .issuer("auction-api")
                    .issuedAt(new Date())
                    .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60))
                    .signWith(getSignKey(), StandardSecureDigestAlgorithms.findBySigningKey(getSignKey()))

@@ -24,21 +24,22 @@ public class UserInfoService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<UserInfo> userInfo = repository.findByUsername(username);
+    public UserDetails loadUserByUsername(String username) {
+        UserInfo user = repository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-        if(userInfo.isEmpty()) {
-            throw new UsernameNotFoundException("User not found with username: " + username);
-        }
-
-        UserInfo user = userInfo.get();
-        return new User(user.getUsername(), user.getPassword(), user.getRolesAsColl());
+        return User.withUsername(user.getUsername())
+                .password(user.getPassword())
+                .authorities(user.getRoles().split(","))
+                .build();
     }
 
     public String addUser(UserInfo userInfo) {
+        if (repository.findByUsername(userInfo.getUsername()).isPresent()) {
+            return "User already exists";
+        }
         userInfo.setPassword(encoder.encode(userInfo.getPassword()));
         repository.save(userInfo);
         return "User added successfully.";
     }
-
 }
