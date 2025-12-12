@@ -39,6 +39,7 @@ public class UserInfoService implements UserDetailsService {
             return "User already exists";
         }
         userInfo.setPassword(encoder.encode(userInfo.getPassword()));
+        userInfo.setRoles("admin"); //REVISE THIS
         repository.save(userInfo);
         return "User added successfully.";
     }
