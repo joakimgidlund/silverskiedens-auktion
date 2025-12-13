@@ -4,21 +4,25 @@ import se.yrgo.auctionapi.data.AuctionRepository;
 import se.yrgo.auctionapi.domain.Auction;
 import se.yrgo.auctionapi.dto.AuctionDTO;
 import se.yrgo.auctionapi.dto.AuctionLotDTO;
+import se.yrgo.auctionapi.dto.CreateAuctionDTO;
+import se.yrgo.auctionapi.dto.UpdateAuctionDTO;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface AuctionService {
 
-    List<Auction> allAuctions();
+    List<AuctionDTO> allAuctions();
 
     List<AuctionLotDTO> allAuctionsWithLotInfo();
 
-    Auction createAuction(Auction auction);
+    AuctionDTO createAuction(CreateAuctionDTO auction);
 
-    Optional<Auction> findAuctionById(Long id);
+    AuctionDTO findAuctionById(Long id);
 
-    Auction updateAuction(Long id, AuctionDTO updated);
+    AuctionLotDTO findFullAuctionById(Long id);
+
+    AuctionDTO updateAuction(Long id, UpdateAuctionDTO updated);
 
     void deleteAuction(Long id);
 

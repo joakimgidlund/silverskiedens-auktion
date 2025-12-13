@@ -1,7 +1,5 @@
 package se.yrgo.auctionapi.dto;
 
-import se.yrgo.auctionapi.domain.Lot;
-
 import java.time.Instant;
 
 public class AuctionDTO {
@@ -10,7 +8,13 @@ public class AuctionDTO {
     private Long lotId;
     private Instant endTime;
 
-    public AuctionDTO() {}
+
+    public AuctionDTO(Long id, double estimate, Long lotId, Instant endTime) {
+        this.id = id;
+        this.estimate = estimate;
+        this.lotId = lotId;
+        this.endTime = endTime;
+    }
 
     public Long getId() {
         return id;
