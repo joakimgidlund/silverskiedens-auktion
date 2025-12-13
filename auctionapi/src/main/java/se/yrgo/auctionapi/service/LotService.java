@@ -1,19 +1,19 @@
 package se.yrgo.auctionapi.service;
 
-import se.yrgo.auctionapi.domain.Lot;
+import se.yrgo.auctionapi.dto.CreateLotDTO;
 import se.yrgo.auctionapi.dto.LotDTO;
+import se.yrgo.auctionapi.dto.UpdateLotDTO;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface LotService {
-    List<Lot> allLots();
+    List<LotDTO> allLots();
 
-    Lot createLot(Lot lot);
+    LotDTO createLot(CreateLotDTO dto);
 
-    Optional<Lot> findLotById(Long id);
+    LotDTO findLotById(Long id);
 
-    Lot updateLot(Long id, LotDTO updated);
+    LotDTO updateLot(Long id, UpdateLotDTO updated);
 
     void deleteLot(Long id);
 }
