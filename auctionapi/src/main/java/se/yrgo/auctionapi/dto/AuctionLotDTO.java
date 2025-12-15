@@ -5,6 +5,7 @@ import java.time.Instant;
 public class AuctionLotDTO {
     private Long auctionId;
     private double estimate;
+    private double currentBid;
     private Instant endTime;
     private Long lotId;
     private String title;
@@ -13,7 +14,7 @@ public class AuctionLotDTO {
 
     public AuctionLotDTO(){}
 
-    public AuctionLotDTO(Long id, Instant endTime, double estimate, Long lotId, String title, String description, String imagePath) {
+    public AuctionLotDTO(Long id, Instant endTime, double estimate, double currentBid, Long lotId, String title, String description, String imagePath) {
     }
 
     public Long getAuctionId() {
@@ -30,6 +31,14 @@ public class AuctionLotDTO {
 
     public void setEstimate(double estimate) {
         this.estimate = estimate;
+    }
+
+    public double getCurrentBid() {
+        return currentBid;
+    }
+
+    public void setCurrentBid(double currentBid) {
+        this.currentBid = currentBid;
     }
 
     public Instant getEndTime() {

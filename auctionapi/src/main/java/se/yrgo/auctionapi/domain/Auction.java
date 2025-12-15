@@ -10,6 +10,7 @@ public class Auction {
     @GeneratedValue
     private Long id;
     private double estimate;
+    private double currentBid;
     @ManyToOne
     @JoinColumn(name= "lot_id")
     private Lot lot;
@@ -31,6 +32,14 @@ public class Auction {
 
     public void setEstimate(double estimate) {
         this.estimate = estimate;
+    }
+
+    public double getCurrentBid() {
+        return currentBid;
+    }
+
+    public void setCurrentBid(double currentBid) {
+        this.currentBid = currentBid;
     }
 
     public Lot getLot() {

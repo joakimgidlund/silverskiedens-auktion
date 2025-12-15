@@ -68,6 +68,7 @@ public class AuctionServiceImpl implements AuctionService{
         Auction auction = auctionRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Auction not found"));
         auction.setEstimate(updated.getEstimate());
+        auction.setCurrentBid(updated.getCurrentBid());
         Auction saved = auctionRepository.save(auction);
         return toDto(saved);
     }
@@ -83,6 +84,7 @@ public class AuctionServiceImpl implements AuctionService{
                 auction.getId(),
                 auction.getEndTime(),
                 auction.getEstimate(),
+                auction.getCurrentBid(),
                 lot.getId(),
                 lot.getTitle(),
                 lot.getDescription(),
