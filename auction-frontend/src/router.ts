@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-import RegisterView from "./views/RegisterView.vue";
+import RegisterView from "./views/RegisterView.vue"
 import LoginView from "./views/LoginView.vue";
 import StartView from "./views/StartView.vue";
 import { isLoggedIn } from "./composables/useAuth.ts";
@@ -10,17 +10,15 @@ const routes = [
   {
     path: "/login",
     component: LoginView,
-    beforeEnter: (to, from, next) => {
-      if (isLoggedIn.value) next("/");
-      else next();
+    beforeEnter: () => {
+      if (isLoggedIn.value) return "/";
     },
   },
   {
     path: "/register",
     component: RegisterView,
-    beforeEnter: (to, from, next) => {
-      if (isLoggedIn.value) next("/");
-      else next();
+    beforeEnter: () => {
+      if (isLoggedIn.value) return "/";
     },
   },
 ];
