@@ -1,0 +1,80 @@
+services:
+  auction-api-db:
+    image: mysql:8.0
+    container_name: auction-api-db
+    environment:
+      MYSQL_ROOT_PASSWORD: yrgoP4ssword
+      MYSQL_DATABASE: auction_api_db
+    ports:
+      - "3306:3306"
+    volumes:
+      - auction-api-db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pyrgoP4ssword"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  auction-auth-db:
+    image: mysql:8.0
+    container_name: auction-auth-db
+    environment:
+      MYSQL_ROOT_PASSWORD: yrgoP4ssword
+      MYSQL_DATABASE: auction_auth_db
+    ports:
+      - "3307:3307"
+    volumes:
+      - auction-auth-db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pyrgoP4ssword"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  auction-api:
+    ports:
+      - "8080:8080"
+    image: auction-api
+    container_name: auctionapi
+    depends_on:
+      auction-api-db:
+        condition: service_healthy
+    links:
+      - auction-api-db
+    build:
+      context: ../auctionapi
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://auction-api-db:3306/auction_api_db
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=yrgoP4ssword
+
+  auction-auth-api:
+    ports:
+      - "8081:8080"
+    image: auction-auth-api
+    container_name: auction-auth-api
+    depends_on:
+      auction-auth-db:
+        condition: service_healthy
+    links:
+      - auction-auth-db
+    build:
+      context: ../auth
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://auction-api-db:3306/auction_api_db
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=yrgoP4ssword
+
+  frontend:
+    build: ../auction-frontend
+    ports:
+      - "8085:80"
+    depends_on:
+      - auction-auth-api
+      - auction-api
+
+volumes:
+  auction-api-db-data:
+  auction-auth-db-data:

@@ -19,7 +19,7 @@ import se.yrgo.auth.entity.UserInfo;
 import se.yrgo.auth.service.JwtService;
 import se.yrgo.auth.service.UserInfoService;
 
-@CrossOrigin(origins = "http://localhost:5173")
+// @CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/auth")
 public class UserController {
