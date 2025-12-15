@@ -4,6 +4,7 @@ public class CreateLotDTO {
     private String title;
     private String description;
     private String imagePath;
+    private boolean published;
 
     public CreateLotDTO() {}
 
@@ -29,5 +30,13 @@ public class CreateLotDTO {
 
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
+    }
+
+    public boolean isPublished() {
+        return published;
+    }
+
+    public void setPublished(boolean published) {
+        this.published = published;
     }
 }

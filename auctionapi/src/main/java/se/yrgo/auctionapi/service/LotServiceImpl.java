@@ -32,6 +32,7 @@ public class LotServiceImpl implements LotService {
         lot.setTitle(dto.getTitle());
         lot.setDescription(dto.getDescription());
         lot.setImagePath(dto.getImagePath());
+        lot.setPublished(dto.isPublished());
         Lot saved = lotRepository.save(lot);
         return toDto(saved);
     }
@@ -52,6 +53,7 @@ public class LotServiceImpl implements LotService {
                     existing.setTitle(updated.getTitle());
                     existing.setDescription(updated.getDescription());
                     existing.setImagePath(updated.getImagePath());
+                    existing.setPublished(updated.isPublished());
                     return lotRepository.save(existing);
                 })
                 .orElseThrow(() -> new RuntimeException("Lot not found"));
@@ -68,7 +70,8 @@ public class LotServiceImpl implements LotService {
                 lot.getId(),
                 lot.getTitle(),
                 lot.getDescription(),
-                lot.getImagePath()
+                lot.getImagePath(),
+                lot.isPublished()
         );
     }
 }

@@ -9,11 +9,12 @@ public class LotDTO {
 
     public LotDTO(){}
 
-    public LotDTO(Long id, String title, String description, String imagePath) {
+    public LotDTO(Long id, String title, String description, String imagePath, boolean published) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.imagePath = imagePath;
+        this.published = published;
     }
 
     public Long getId() {
