@@ -4,8 +4,11 @@ cd ../auctionapi
 mvn clean package
 cd ../auth
 mvn clean package
-cd ..
-cd auction-frontend
+cd ../gateway
+mvn clean package
+cd ../bidbroker
+mvn clean package
+cd ../auction-frontend
 npm install
 npm run build
 cd ../docker

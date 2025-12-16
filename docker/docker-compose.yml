@@ -33,6 +33,23 @@ services:
       retries: 5
       start_period: 10s
 
+  bidbroker-db:
+    image: mysql:8.0
+    container_name: bidbroker-db
+    environment:
+      MYSQL_ROOT_PASSWORD: yrgoP4ssword
+      MYSQL_DATABASE: bidbroker_db
+    ports:
+      - "3308:3308"
+    volumes:
+      - bidbroker-db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p", "yrgoP4ssword"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
   auction-api:
     ports:
       - "8080:8080"
@@ -50,6 +67,7 @@ services:
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=yrgoP4ssword
 
+
   auction-auth-api:
     ports:
       - "8081:8080"
@@ -66,6 +84,31 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:mysql://auction-api-db:3306/auction_api_db
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=yrgoP4ssword
+  
+  gateway-api:
+    ports:
+      - "8082:8080"
+    image: gateway-api
+    container_name: gateway-api
+    build:
+      context: ../gateway
+      
+  auction-bidbroker:
+    ports:
+      - "8083:8080"
+    image: auction-bidbroker
+    container_name: auction-bidbroker
+    depends_on:
+      bidbroker-db:
+        condition: service_healthy
+    links:
+      - bidbroker-db
+    build:
+      context: ../bidbroker
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://auction-api-db:3306/bidbroker_db
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=yrgoP4ssword
 
   frontend:
     build: ../auction-frontend
@@ -78,3 +121,4 @@ services:
 volumes:
   auction-api-db-data:
   auction-auth-db-data:
+  bidbroker-db-data:
