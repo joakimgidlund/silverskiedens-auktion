@@ -6,7 +6,6 @@ export const token = ref<string | null>(null);
 export function loginUser(jwt: string) {
   token.value = jwt;
   isLoggedIn.value = true;
-  cookieStore.set("jwt", `Bearer ${jwt}`);
 }
 
 export function logoutUser() {
@@ -15,10 +14,10 @@ export function logoutUser() {
   cookieStore.delete("jwt");
 }
 
-export function initAuth() {
-  const savedToken = localStorage.getItem("token");
-  if (savedToken) {
-    token.value = savedToken;
-    isLoggedIn.value = true;
-  }
-}
+// export function initAuth() {
+//   const savedToken = localStorage.getItem("token");
+//   if (savedToken) {
+//     token.value = savedToken;
+//     isLoggedIn.value = true;
+//   }
+// }
