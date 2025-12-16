@@ -1,15 +1,16 @@
 package se.yrgo.auctionapi.dto;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 
 public class AuctionDTO {
     private Long id;
-    private double estimate;
+    private BigDecimal estimate;
     private Long lotId;
     private Instant endTime;
 
 
-    public AuctionDTO(Long id, double estimate, Long lotId, Instant endTime) {
+    public AuctionDTO(Long id, BigDecimal estimate, Long lotId, Instant endTime) {
         this.id = id;
         this.estimate = estimate;
         this.lotId = lotId;
@@ -24,11 +25,11 @@ public class AuctionDTO {
         this.id = id;
     }
 
-    public double getEstimate() {
+    public BigDecimal getEstimate() {
         return estimate;
     }
 
-    public void setEstimate(double estimate) {
+    public void setEstimate(BigDecimal estimate) {
         this.estimate = estimate;
     }
 

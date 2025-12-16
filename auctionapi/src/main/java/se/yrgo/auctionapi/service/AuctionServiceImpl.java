@@ -1,12 +1,16 @@
 package se.yrgo.auctionapi.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import se.yrgo.auctionapi.data.AuctionRepository;
+import se.yrgo.auctionapi.data.BidRepository;
 import se.yrgo.auctionapi.data.LotRepository;
 import se.yrgo.auctionapi.domain.Auction;
 import se.yrgo.auctionapi.domain.Lot;
+import se.yrgo.auctionapi.domain.Bid;
 import se.yrgo.auctionapi.dto.*;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -16,10 +20,12 @@ public class AuctionServiceImpl implements AuctionService{
 
     private final AuctionRepository auctionRepository;
     private final LotRepository lotRepository;
+    private final BidRepository bidRepository;
 
-    public AuctionServiceImpl(AuctionRepository auctionRepository, LotRepository lotRepository) {
+    public AuctionServiceImpl(AuctionRepository auctionRepository, LotRepository lotRepository, BidRepository bidRepository) {
         this.auctionRepository = auctionRepository;
         this.lotRepository = lotRepository;
+        this.bidRepository = bidRepository;
     }
 
     @Override
@@ -76,6 +82,37 @@ public class AuctionServiceImpl implements AuctionService{
     @Override
     public void deleteAuction(Long id) {
         auctionRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public void placeBid(Long auctionId, Long userId, BigDecimal bidAmount, Instant timestamp) {
+        if (auctionId == null || userId == null || bidAmount == null) {
+            throw new IllegalArgumentException("Invalid bid data");
+        }
+        Auction auction = auctionRepository.findById(auctionId)
+                .orElseThrow(() -> new RuntimeException("Auction not found"));
+
+        if (auction.getEndTime().isBefore(Instant.now())) {
+            throw new RuntimeException("Auction has ended");
+        }
+
+        BigDecimal highestBid = bidRepository.findHighestBidAmountByAuctionId(auctionId)
+                .orElse(BigDecimal.ZERO);
+
+        if (bidAmount.compareTo(highestBid) <= 0) {
+            throw new RuntimeException("Bid must be higher than current highest bid");
+        }
+
+        Bid bid = new Bid();
+        bid.setAuction(auction);
+        bid.setUserId(userId);
+        bid.setBidAmount(bidAmount);
+        bid.setTimestamp(timestamp);
+        bidRepository.save(bid);
+        auction.setCurrentBid(bidAmount);
+        auctionRepository.save(auction);
+
     }
 
     private AuctionLotDTO toAuctionLotDto(Auction auction) {
