@@ -4,10 +4,10 @@ import App from "./App.vue";
 import { PrimeVue } from "@primevue/core";
 import Aura from "@primeuix/themes/aura";
 import { router } from "./router.ts";
-import { initAuth } from "./composables/useAuth.ts";
+// import { initAuth } from "./composables/useAuth.ts";
 import { ToastService } from "primevue";
 
-initAuth();
+// initAuth();
 
 const app = createApp(App);
 app.use(
