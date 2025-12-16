@@ -2,6 +2,7 @@ package se.yrgo.auctionapi.domain;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 
 @Entity
@@ -9,8 +10,8 @@ public class Auction {
     @Id
     @GeneratedValue
     private Long id;
-    private double estimate;
-    private double currentBid;
+    private BigDecimal estimate;
+    private BigDecimal currentBid;
     @ManyToOne
     @JoinColumn(name= "lot_id")
     private Lot lot;
@@ -26,19 +27,19 @@ public class Auction {
         this.id = id;
     }
 
-    public double getEstimate() {
+    public BigDecimal getEstimate() {
         return estimate;
     }
 
-    public void setEstimate(double estimate) {
+    public void setEstimate(BigDecimal estimate) {
         this.estimate = estimate;
     }
 
-    public double getCurrentBid() {
+    public BigDecimal getCurrentBid() {
         return currentBid;
     }
 
-    public void setCurrentBid(double currentBid) {
+    public void setCurrentBid(BigDecimal currentBid) {
         this.currentBid = currentBid;
     }
 

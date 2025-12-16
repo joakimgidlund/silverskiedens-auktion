@@ -1,16 +1,18 @@
 package se.yrgo.auctionapi.dto;
 
+import java.math.BigDecimal;
+
 public class CreateAuctionDTO {
-    private double estimate;
+    private BigDecimal estimate;
     private Long lotId;
 
     public CreateAuctionDTO() {}
 
-    public double getEstimate() {
+    public BigDecimal getEstimate() {
         return estimate;
     }
 
-    public void setEstimate(double estimate) {
+    public void setEstimate(BigDecimal estimate) {
         this.estimate = estimate;
     }
 
