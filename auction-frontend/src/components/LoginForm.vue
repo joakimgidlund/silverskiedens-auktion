@@ -21,7 +21,7 @@ function onFormSubmit($form) {
 
 async function login(userInfo) {
     try {
-        const resp = await fetch("http://localhost:8081/auth/login", {
+        const resp = await fetch("/auth/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
