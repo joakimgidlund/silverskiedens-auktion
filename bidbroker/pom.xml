@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>se.yrgo</groupId>
 	<artifactId>bidbroker</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0-SNAPSHOT</version>
 	<name>bidbroker</name>
 	<description>Auth microservice for Silverskiedens Auktion</description>
 	<url />

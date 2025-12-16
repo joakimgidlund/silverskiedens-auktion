@@ -11,7 +11,7 @@ services:
      - mysql-data:/var/lib/mysql
 
  java-app:
-   image: java-docker-mysql
+   image: java-app
    container_name: java-app
    depends_on:
      - auction-mysql
@@ -37,7 +37,7 @@ services:
    depends_on:
      - activemq
    build:
-    context: ./bid-broker
+    context: ../bidbroker
    environment:
      - SPRING_ACTIVEMQ_BROKER_URL=tcp://activemq:61616
      - SPRING_ACTIVEMQ_USER=admin
