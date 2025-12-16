@@ -26,6 +26,7 @@ async function login(userInfo) {
             headers: {
                 "Content-Type": "application/json"
             },
+            credentials: "include",
             body: JSON.stringify({
                 username: userInfo.username,
                 password: userInfo.password

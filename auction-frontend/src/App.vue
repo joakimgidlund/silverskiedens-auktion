@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 import { isLoggedIn, logoutUser } from './composables/useAuth';
 import type { Button } from 'primevue';
 import { useRouter } from "vue-router"

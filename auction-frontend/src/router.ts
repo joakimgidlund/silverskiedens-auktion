@@ -10,17 +10,15 @@ const routes = [
   {
     path: "/login",
     component: LoginView,
-    beforeEnter: (to, from, next) => {
-      if (isLoggedIn.value) next("/");
-      else next();
+    beforeEnter: () => {
+      if (isLoggedIn.value) return "/";
     },
   },
   {
     path: "/register",
     component: RegisterView,
-    beforeEnter: (to, from, next) => {
-      if (isLoggedIn.value) next("/");
-      else next();
+    beforeEnter: () => {
+      if (isLoggedIn.value) return "/";
     },
   },
 ];
