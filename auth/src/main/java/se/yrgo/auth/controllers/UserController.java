@@ -1,25 +1,26 @@
 package se.yrgo.auth.controllers;
 
+import java.util.Map;
+
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import se.yrgo.auth.entity.AuthRequest;
 import se.yrgo.auth.entity.UserInfo;
 import se.yrgo.auth.service.JwtService;
 import se.yrgo.auth.service.UserInfoService;
 
-// @CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/auth")
 public class UserController {
@@ -40,14 +41,32 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody AuthRequest authRequest) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
+    public ResponseEntity<String> login(@RequestBody AuthRequest authRequest, HttpServletResponse response) {
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            authRequest.getUsername(),
+                            authRequest.getPassword()));
 
-        if (authentication.isAuthenticated()) {
-            return new ResponseEntity<>(jwtService.generateToken(authRequest.getUsername()), HttpStatus.ACCEPTED);
+            String token = jwtService.generateToken(authRequest.getUsername());
+
+            Cookie cookie = new Cookie("jwt", token);
+            cookie.setHttpOnly(true);
+            cookie.setSecure(false);
+            cookie.setPath("/");
+            cookie.setMaxAge(60 * 60);
+            response.addCookie(cookie);
+
+            return new ResponseEntity<>("Login successful.", HttpStatus.OK);
+
+        } catch (AuthenticationException ex) {
+            return new ResponseEntity<>("Unauthorized.", HttpStatus.UNAUTHORIZED);
         }
-        return new ResponseEntity<>("User not found.", HttpStatus.NOT_FOUND);
-
     }
+
+    @GetMapping("/test")
+    public String getMethodName() {
+        return "Test success";
+    }
+
 }

@@ -1,17 +1,19 @@
 package se.yrgo.auctionapi.dto;
 
+import java.math.BigDecimal;
+
 public class UpdateAuctionDTO {
-    private double estimate;
+    private BigDecimal estimate;
     private long lotId;
-    private double currentBid;
+    private BigDecimal currentBid;
 
     public UpdateAuctionDTO() {}
 
-    public double getEstimate() {
+    public BigDecimal getEstimate() {
         return estimate;
     }
 
-    public void setEstimate(double estimate) {
+    public void setEstimate(BigDecimal estimate) {
         this.estimate = estimate;
     }
 
@@ -23,11 +25,11 @@ public class UpdateAuctionDTO {
         this.lotId = lotId;
     }
 
-    public double getCurrentBid() {
+    public BigDecimal getCurrentBid() {
         return currentBid;
     }
 
-    public void setCurrentBid(double currentBid) {
+    public void setCurrentBid(BigDecimal currentBid) {
         this.currentBid = currentBid;
     }
 }

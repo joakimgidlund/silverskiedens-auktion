@@ -27,7 +27,7 @@ public class AuctionRestController {
         return ResponseEntity.ok(auctionService.allAuctionsWithLotInfo());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/auction/{id}")
     public ResponseEntity<AuctionDTO> findAuctionById(@PathVariable Long id) {
         return ResponseEntity.ok(auctionService.findAuctionById(id));
     }
