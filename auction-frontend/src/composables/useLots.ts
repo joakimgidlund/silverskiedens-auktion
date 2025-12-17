@@ -5,7 +5,7 @@ export function useLots() {
   const lots = ref<Lot[]>([]);
   const loading = ref(false);
   const error = ref<string | null>(null);
-
+  
   const loadLots = async () => {
     loading.value = true;
     error.value = null;
@@ -14,7 +14,7 @@ export function useLots() {
       const res = await fetch("/lots/all", { credentials: "include" });
       if (!res.ok) throw new Error("Failed to fetch lots");
       const data = await res.json();
-      return data;
+      lots.value = data;
     } catch (e) {
       error.value = (e as Error).message;
     } finally {
@@ -68,6 +68,21 @@ export function useLots() {
     });
     lot.published = !lot.published;
   };
+
+  const deleteLot = async (lot: Lot) => {
+    try {
+      const res = await fetch(`/lots/${lot.id}`, {
+        method: "DELETE",
+      });
+      if (!res.ok) {
+        throw new Error("Can't delete " + lot.title);
+      }
+      lots.value = lots.value.filter((l) => l.id !== lot.id);
+      console.log(lots.value);
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return {
     lots,
     loading,
@@ -75,5 +90,6 @@ export function useLots() {
     loadLots,
     createLot,
     publishLot,
+    deleteLot,
   };
 }
