@@ -1,20 +1,27 @@
 <script setup lang="ts">
 import { isLoggedIn, logoutUser } from './composables/useAuth';
-import type { Button } from 'primevue';
+import Toolbar from 'primevue/toolbar';
+import Button from 'primevue/button';
 import { useRouter } from "vue-router"
-
+ 
 const router = useRouter();
 </script>
 
 <template>
+  
   <Toolbar>
     <template #start>
-      <Button icon="pi pi-plus" class="mr-2" severity="secondary" text />
-      <Button icon="pi pi-print" class="mr-2" severity="secondary" text />
-      <Button icon="pi pi-upload" severity="secondary" text />
+      <Button icon="pi pi-upload" severity="primary" text />
+      <Button severity="secondary" label="Silverskiedens auktion" @click="router.push('/')"/>
     </template>
 
     <template #center>
+       <Button label="Create Lot" 
+      class="mr-2" severity="primary" @click="router.push('/create-lot')"/>
+       <Button label="Lots" 
+      class="mr-2" severity="primary" @click="router.push('/lots')"/>
+       <Button label="Auctions" 
+      class="mr-2" severity="primary" @click="router.push('/auctions')"/>
     </template>
 
     <template #end>
@@ -23,17 +30,29 @@ const router = useRouter();
       </RouterLink>
       <Button v-else label="Logout" @click="logoutUser(); router.push('/login')" />
     </template>
+    
   </Toolbar>
+  <div id="app" class="app-container">
   <div class="flex flex-row gap-5">
-    <RouterLink to="/">Home</RouterLink>
     <RouterLink v-if="!isLoggedIn" to="/login">
       <p class="underline">Login</p>
     </RouterLink>
     <RouterLink v-if="!isLoggedIn" to="/register">Register</RouterLink>
-    <RouterLink to="/register">Products</RouterLink>
+  
   </div>
   <div>
     <RouterView />
   </div>
+  </div>
   <Toast position="bottom-right"/>
 </template>
+
+<style scoped>
+  .app-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align:center;
+  }
+</style>

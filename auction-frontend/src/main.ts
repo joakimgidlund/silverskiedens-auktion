@@ -6,6 +6,8 @@ import Aura from "@primeuix/themes/aura";
 import { router } from "./router.ts";
 // import { initAuth } from "./composables/useAuth.ts";
 import { ToastService } from "primevue";
+import Button from "primevue/button";
+import Toolbar from "primevue/toolbar";
 
 // initAuth();
 
@@ -20,4 +22,6 @@ app.use(
 );
 app.use(router);
 app.use(ToastService);
+app.component("Button", Button);
+app.component("Toolbar", Toolbar)
 app.mount("#app");
