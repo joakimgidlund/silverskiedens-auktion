@@ -8,7 +8,7 @@ import java.time.Instant;
 @Entity
 public class Auction {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     private BigDecimal estimate;
     private BigDecimal currentBid;

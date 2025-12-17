@@ -1,0 +1,19 @@
+INSERT INTO user_info (username, password, email, roles) VALUES
+(
+  'admin',
+  '$2a$10$ZhxD1haWWhA59r65eoLZkOS4hp9MaJNv8cPm7/2MuRIiBumEZ1Ps2',
+  'admin@auction.com',
+  'ROLE_ADMIN,ROLE_USER'
+),
+(
+  'user1',
+  '$2a$10$ZhxD1haWWhA59r65eoLZkOS4hp9MaJNv8cPm7/2MuRIiBumEZ1Ps2',
+  'user1@auction.com',
+  'ROLE_USER'
+),
+(
+  'user2',
+  '$2a$10$ZhxD1haWWhA59r65eoLZkOS4hp9MaJNv8cPm7/2MuRIiBumEZ1Ps2',
+  'user2@auction.com',
+  'ROLE_USER'
+);

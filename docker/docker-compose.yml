@@ -8,6 +8,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
+      - ./mysql/auctionapi:/docker-entrypoint-initdb.d
       - auction-api-db-data:/var/lib/mysql
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pyrgoP4ssword"]
@@ -25,6 +26,7 @@ services:
     ports:
       - "3307:3306"
     volumes:
+      - ./mysql/auth:/docker-entrypoint-initdb.d
       - auction-auth-db-data:/var/lib/mysql
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pyrgoP4ssword"]
@@ -42,6 +44,7 @@ services:
     ports:
       - "3308:3306"
     volumes:
+      - ./mysql/bidbroker:/docker-entrypoint-initdb.d
       - bidbroker-db-data:/var/lib/mysql
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pyrgoP4ssword"]

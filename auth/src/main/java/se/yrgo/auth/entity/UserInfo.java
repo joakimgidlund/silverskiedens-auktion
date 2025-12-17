@@ -16,7 +16,7 @@ import jakarta.persistence.Id;
 public class UserInfo {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
     
     @Column(unique = true)
