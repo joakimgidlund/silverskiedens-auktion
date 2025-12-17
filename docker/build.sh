@@ -4,8 +4,6 @@ cd ../auctionapi
 mvn clean package
 cd ../auth
 mvn clean package
-cd ../gateway
-mvn clean package
 cd ../bidbroker
 mvn clean package
 cd ../auction-frontend
