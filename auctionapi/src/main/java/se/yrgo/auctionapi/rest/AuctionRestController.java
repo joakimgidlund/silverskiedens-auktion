@@ -22,7 +22,7 @@ public class AuctionRestController {
         this.auctionService = auctionService;
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<AuctionLotDTO>> allAuctionsWithInfo() {
         return ResponseEntity.ok(auctionService.allAuctionsWithLotInfo());
     }

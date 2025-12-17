@@ -1,8 +1,11 @@
 package se.yrgo.auth.controllers;
 
+import java.time.Duration;
 import java.util.Map;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -50,13 +53,15 @@ public class UserController {
 
             String token = jwtService.generateToken(authRequest.getUsername());
 
-            Cookie cookie = new Cookie("jwt", token);
-            cookie.setHttpOnly(true);
-            cookie.setSecure(false);
-            cookie.setPath("/");
-            cookie.setMaxAge(60 * 60);
-            response.addCookie(cookie);
+            ResponseCookie cookie = ResponseCookie.from("jwt", token)
+                        .httpOnly(true)
+                        .secure(false)
+                        .path("/")
+                        .sameSite("Lax")
+                        .maxAge(Duration.ofHours(24))
+                        .build();
 
+            response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
             return new ResponseEntity<>("Login successful.", HttpStatus.OK);
 
         } catch (AuthenticationException ex) {

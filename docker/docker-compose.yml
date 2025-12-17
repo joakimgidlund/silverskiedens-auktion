@@ -55,7 +55,7 @@ services:
 
   auction-api:
     ports:
-      - "8080:8080"
+      - "8082:8080"
     image: auction-api
     container_name: auctionapi
     depends_on:
@@ -87,14 +87,6 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:mysql://auction-auth-db:3306/auction_auth_db
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=yrgoP4ssword
-  
-  gateway-api:
-    ports:
-      - "8082:8080"
-    image: gateway-api
-    container_name: gateway-api
-    build:
-      context: ../gateway
 
   auction-bidbroker:
     ports:
@@ -120,6 +112,7 @@ services:
     depends_on:
       - auction-auth-api
       - auction-api
+      - auction-bidbroker
 
   activemq:
    image: rmohr/activemq:5.15.9
