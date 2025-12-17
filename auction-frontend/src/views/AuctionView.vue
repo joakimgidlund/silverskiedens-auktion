@@ -2,8 +2,7 @@
     import { ref, onMounted } from "vue";
     import { useAuctions } from "../composables/useAuctions";
     import type { AuctionLot } from "../types/AuctionLot";
-    import { isLoggedIn, userId } from "../composables/useAuth";
-    import Toast from "primevue/toast";
+    import { isLoggedIn } from "../composables/useAuth";
     import Button from "primevue/button";
     import  DataView  from "primevue/dataview";
 
@@ -45,8 +44,8 @@
     <div class="p-4">
         <h2 :style="{ fontFamily: 'Playfair Display, serif' }">Auktioner</h2>
         <DataView :value="auctions" layout="grid" class="p-mt-4">
-            <template #grid="{ item }">
-                <div class="p-card p-mb-3">
+            <template #list="slotProps">
+                <div v-for="(item, index) in slotProps.items" :key="index" class="p-card p-mb-3">
                     <img :src="item.imagePath" alt="item.title" class="p-mb-2" style="width:100%; height:200px; object-fit:cover;"/>
                     <div class="p-card-content">
                         <h3>{{ item.title }}</h3>
