@@ -2,9 +2,8 @@ package se.yrgo.bidbroker.rest;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.security.core.Authentication;
 import se.yrgo.bidbroker.dto.BidRequest;
 import se.yrgo.bidbroker.dto.BidResponse;
 import se.yrgo.bidbroker.dto.SubmittedBidDTO;
@@ -22,8 +21,8 @@ public class BidController {
     }
 
     @PostMapping("/{auctionId}")
-    public ResponseEntity<BidResponse> placeBid(@PathVariable Long auctionId, @RequestBody BidRequest request) {
-        Long userId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public ResponseEntity<BidResponse> placeBid(@PathVariable Long auctionId, @RequestBody BidRequest request, @AuthenticationPrincipal Jwt jwt) {
+        Long userId = Long.valueOf(jwt.getClaim("user-id"));
         try {
             bidService.submitBid(auctionId, userId, request.getBidAmount());
             return ResponseEntity.accepted().body(new BidResponse("Bid submitted successfully", true));
