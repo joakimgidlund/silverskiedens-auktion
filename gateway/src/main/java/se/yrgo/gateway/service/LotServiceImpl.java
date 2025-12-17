@@ -15,7 +15,7 @@ import se.yrgo.gateway.dto.UpdateLotDTO;
 public class LotServiceImpl implements LotService {
     private final RestClient restClient;
 
-    private static final String BASEURL = "http://auction-api:8080/lots/";
+    private static final String BASEURL = "http://auctionapi:8080/lots/";
 
     public LotServiceImpl(RestClient restClient) {
         this.restClient = restClient;

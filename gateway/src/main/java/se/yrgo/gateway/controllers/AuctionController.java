@@ -29,7 +29,7 @@ public class AuctionController {
     }
 
     @GetMapping
-    public ResponseEntity<List<AuctionLotDTO>> getMethodName() {
+    public ResponseEntity<List<AuctionLotDTO>> getAllAuctions() {
         return service.allAuctions();
     }
 

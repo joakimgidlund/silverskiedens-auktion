@@ -18,7 +18,7 @@ public class BidController {
         this.bidService = bidService;
     }
 
-    @PostMapping
+    @PostMapping("/place-bid")
     public ResponseEntity<BidResponse> placeBid(@RequestHeader("X-User-Id") Long userId,
                                                 @RequestBody BidRequest request) {
         try {

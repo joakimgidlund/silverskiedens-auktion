@@ -18,7 +18,7 @@ import se.yrgo.gateway.dto.UpdateAuctionDTO;
 public class AuctionServiceImpl implements AuctionService {
     private final RestClient restClient;
 
-    private static final String BASEURL = "http://auction-api:8080/auctions/";
+    private static final String BASEURL = "http://auctionapi:8080/auctions";
 
     public AuctionServiceImpl(RestClient restClient) {
         this.restClient = restClient;
@@ -34,7 +34,7 @@ public class AuctionServiceImpl implements AuctionService {
 
     @Override
     public ResponseEntity<AuctionDTO> getAuction(Long id) {
-        return restClient.get().uri(BASEURL + "auction/" + id)
+        return restClient.get().uri(BASEURL + "/auction/" + id)
                 .exchange((request, response) -> ResponseEntity.status(response.getStatusCode())
                         .body(response.bodyTo(new ParameterizedTypeReference<AuctionDTO>() {
                         })));
@@ -50,7 +50,7 @@ public class AuctionServiceImpl implements AuctionService {
 
     @Override
     public ResponseEntity<AuctionDTO> createAuction(CreateAuctionDTO dto) {
-        return restClient.post().uri(BASEURL + "create-auction").body(dto)
+        return restClient.post().uri(BASEURL + "/create-auction").body(dto)
                 .exchange((request, response) -> ResponseEntity.status(response.getStatusCode())
                         .body(response.bodyTo(new ParameterizedTypeReference<AuctionDTO>() {
                         })));

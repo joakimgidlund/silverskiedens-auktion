@@ -6,6 +6,7 @@ import javax.crypto.SecretKey;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -32,7 +33,8 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers("/api/auth/**").permitAll()
                         .anyRequest().authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .bearerTokenResolver(bearerTokenResolver())
@@ -67,14 +69,15 @@ public class SecurityConfig {
     public BearerTokenResolver bearerTokenResolver() {
         return request -> {
             String path = request.getRequestURI();
-            if (path.startsWith("/auth/")) {
+            if (path.startsWith("/api/auth/")) {
                 return null; // skip JWT auth
             }
 
             // Otherwise, get JWT from cookie
             if (request.getCookies() != null) {
                 for (Cookie cookie : request.getCookies()) {
-                    if ("access_token".equals(cookie.getName())) {
+                    if ("jwt".equals(cookie.getName())) {
+                        System.out.println("Cookie found: " + cookie);
                         return cookie.getValue();
                     }
                 }

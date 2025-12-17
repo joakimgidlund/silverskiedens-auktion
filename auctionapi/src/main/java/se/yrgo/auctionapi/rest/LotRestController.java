@@ -22,7 +22,7 @@ public class LotRestController {
         this.lotService = lotService;
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<LotDTO>> allLots() {
         return ResponseEntity.ok(lotService.allLots());
     }
