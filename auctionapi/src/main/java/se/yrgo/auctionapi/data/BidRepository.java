@@ -15,4 +15,5 @@ public interface BidRepository extends JpaRepository<Bid, Long> {
 
     @Query("SELECT COALESCE(MAX(b.bidAmount), 0) FROM Bid b WHERE b.auction.id = :auctionId")
     Optional<BigDecimal> findHighestBidAmountByAuctionId(@Param("auctionId") Long auctionId);
+    void deleteByAuctionId(Long auctionId);
 }
