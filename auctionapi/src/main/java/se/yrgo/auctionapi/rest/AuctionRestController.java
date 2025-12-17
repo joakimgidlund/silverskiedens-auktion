@@ -44,7 +44,7 @@ public class AuctionRestController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AuctionDTO> update(@PathVariable Long id, @RequestBody UpdateAuctionDTO  dto) {
+    public ResponseEntity<AuctionDTO> update(@PathVariable Long id, @RequestBody UpdateAuctionDTO dto) {
         AuctionDTO updated = auctionService.updateAuction(id, dto);
         return ResponseEntity.ok(updated);
     }

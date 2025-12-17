@@ -1,6 +1,5 @@
 package se.yrgo.gateway.service;
 
-import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
