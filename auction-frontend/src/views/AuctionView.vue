@@ -7,9 +7,9 @@
     import  DataView  from "primevue/dataview";
 
     const { auctions, loadAuctions, placeBid } = useAuctions();
-    const bidAmount = ref<number | null>(null);
     const loading = ref(false);
     const error = ref<string | null>(null);
+    const bidAmounts = ref<Record<number, number>>({})
         
     onMounted(loadAuctions);
 
@@ -18,18 +18,20 @@
             alert("Du måste vara inloggad för att lägga ett bud!");
             return;
         }
+        
+        const bidAmount = bidAmounts.value[auction.auctionId]
 
-        if (!bidAmount.value || bidAmount.value <= 0) {
+        if (!bidAmount || bidAmount <= auction.currentBid) {
             alert("Skriv in en giltig summa");
             return;
         }
 
         loading.value = true;
         try {
-            await placeBid(auction.auctionId, bidAmount.value);
+            await placeBid(auction.auctionId, bidAmount);
             alert("Bud lagt!");
+            bidAmounts.value[auction.auctionId] = 0
             await loadAuctions();
-            bidAmount.value = null;
         } catch (e) {
             error.value = (e as Error).message;
             alert(error.value);
@@ -68,6 +70,8 @@
 
                 <input 
                   type="number" 
+                  v-model.number="bidAmounts[item.auctionId]"
+                  :min="item.currentBid + 1"
                   placeholder="Ditt bud" 
                   class="p-inputtext p-mt-2 p-mb-2"
                 />
