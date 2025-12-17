@@ -11,7 +11,6 @@ export function loginUser(jwt: string) {
 export function logoutUser() {
   token.value = null;
   isLoggedIn.value = false;
-  cookieStore.delete("jwt");
 }
 
 // export function initAuth() {
