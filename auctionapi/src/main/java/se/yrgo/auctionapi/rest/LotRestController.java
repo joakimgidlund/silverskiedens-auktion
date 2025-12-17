@@ -1,10 +1,8 @@
 package se.yrgo.auctionapi.rest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import se.yrgo.auctionapi.domain.Lot;
 import se.yrgo.auctionapi.dto.CreateLotDTO;
 import se.yrgo.auctionapi.dto.LotDTO;
 import se.yrgo.auctionapi.dto.UpdateLotDTO;
@@ -17,7 +15,6 @@ import java.util.List;
 public class LotRestController {
     private final LotService lotService;
 
-    @Autowired
     public LotRestController(LotService lotService) {
         this.lotService = lotService;
     }

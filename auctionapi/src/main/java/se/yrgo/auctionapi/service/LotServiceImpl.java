@@ -1,6 +1,10 @@
 package se.yrgo.auctionapi.service;
 
 import org.springframework.stereotype.Service;
+
+import jakarta.transaction.Transactional;
+import se.yrgo.auctionapi.data.AuctionRepository;
+import se.yrgo.auctionapi.data.BidRepository;
 import se.yrgo.auctionapi.data.LotRepository;
 import se.yrgo.auctionapi.domain.Lot;
 import se.yrgo.auctionapi.dto.CreateLotDTO;
@@ -8,15 +12,18 @@ import se.yrgo.auctionapi.dto.LotDTO;
 import se.yrgo.auctionapi.dto.UpdateLotDTO;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class LotServiceImpl implements LotService {
 
     private final LotRepository lotRepository;
+    private final AuctionRepository auctionRepository;
+    private final BidRepository bidRepository;
 
-    public LotServiceImpl(LotRepository lotRepository) {
+    public LotServiceImpl(LotRepository lotRepository, AuctionRepository auctionRepository, BidRepository bidRepository) {
         this.lotRepository = lotRepository;
+        this.auctionRepository = auctionRepository;
+        this.bidRepository = bidRepository;
     }
     @Override
     public List<LotDTO> allLots() {
@@ -61,8 +68,14 @@ public class LotServiceImpl implements LotService {
     }
 
     @Override
+    @Transactional
     public void deleteLot(Long id) {
-        lotRepository.deleteById(id);
+        var auction = auctionRepository.findByLotId(id);
+        if(auction.isPresent()) {
+            bidRepository.deleteByAuctionId(auction.get().getId());
+            auctionRepository.deleteByLotId(id);
+            lotRepository.deleteById(id);
+        }
     }
 
     private LotDTO toDto(Lot lot) {
