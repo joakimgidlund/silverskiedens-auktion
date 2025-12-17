@@ -8,7 +8,7 @@ import java.time.Instant;
 @Entity
 public class Bid {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
