@@ -2,7 +2,7 @@
     import { ref, onMounted } from "vue";
     import { useLots } from "../composables/useLots";
 
-    const { lots, loadLots, createLot, loading, error } = useLots();
+    const { loadLots, createLot, loading, error } = useLots();
 
     const title = ref("")
     const description = ref("")
@@ -20,13 +20,13 @@ onMounted(loadLots);
 
 <template>
     <div>
-        <h2>Create Lot</h2>
+        <h2 :style="{ fontFamily: 'Playfair Display, serif' }">Registrera föremål</h2>
     <form @submit.prevent="submit">
-        <input v-model="title" placeholder="Title"/>
-        <input v-model="description" placeholder="Description" />
-        <input v-model="imagePath" placeholder="Image URL" />
+        <input v-model="title" placeholder="Titel"/>
+        <input v-model="description" placeholder="Beskrivning" />
+        <input v-model="imagePath" placeholder="Bild URL" />
 
-        <Button label="Create" :loading="loading" @click="submit"/>
+        <Button label="Registrera" :loading="loading" @click="submit"/>
     </form>
         <p v-if="error" class="error">{{ error }}</p>
 

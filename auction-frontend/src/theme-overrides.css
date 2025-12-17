@@ -1,0 +1,30 @@
+:root {
+  /* Primary */
+  --primary-color: steelblue;         
+  --primary-color-hover: #4682b4;      
+  --primary-color-active: #4169a1;     
+  --primary-color-text: #ffffff;       
+
+  /* Surface */
+  --surface-ground: #f5f5f5;          
+  --surface-card: #ffffff;            
+  --surface-overlay: rgba(0, 0, 0, 0.5); 
+  
+  /* Text */
+  --text-color: #1f2937;               
+  --text-color-secondary: #4b5563;     
+
+  /* Knapp */
+  --button-bg-color: var(--primary-color);
+  --button-border-color: var(--primary-color);
+  --button-text-color: var(--primary-color-text);
+  --button-hover-bg-color: var(--primary-color-hover);
+  --button-hover-border-color: var(--primary-color-hover);
+  --button-active-bg-color: var(--primary-color-active);
+  --button-active-border-color: var(--primary-color-active);
+  
+  /* Border */
+  --border-color: #d1d5db;             
+  --input-border-color: #d1d5db;       
+  --input-focus-border-color: var(--primary-color);
+}

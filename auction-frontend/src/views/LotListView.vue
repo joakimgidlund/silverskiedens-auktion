@@ -17,7 +17,7 @@ onMounted(async () => {
   try {
     lots.value = await loadLots()
   } catch (e) {
-    error.value = "Kunde inte hämta lots"
+    error.value = "Couldn't fetch lots"
   } finally {
     loading.value = false
   }
@@ -26,7 +26,7 @@ onMounted(async () => {
 
 <template>
   <div class="mt-1">
-    <h1>Alla Lots</h1>
+    <h1 :style="{ fontFamily: 'Playfair Display, serif' }">Alla Föremål</h1>
     <DataView :value="lots">
         <template #list="{ items }">
             <div v-for="lot in items" :key="lot.id" class="p-3 border-bottom flex justify-between align-items-center">
@@ -34,9 +34,9 @@ onMounted(async () => {
                     <h3>{{ lot.title }}</h3>
                     <p>{{ lot.description }}</p>
                     <Tag :severity="lot.published ? 'success' : 'warning' "
-                        :value="lot.published ? 'Published' : 'Draft'"/>
+                        :value="lot.published ? 'Publicerad' : 'Utkast'"/>
                 </div>
-            <Button :label="lot.published ? 'Unpublish' : 'Publish'" @click="publishLot(lot)"/>
+            <Button :label="lot.published ? 'Dra ut' : 'Publicera'" @click="publishLot(lot)"/>
             </div>
         </template>
     </DataView>

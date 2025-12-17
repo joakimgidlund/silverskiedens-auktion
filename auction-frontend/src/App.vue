@@ -3,7 +3,8 @@ import { isLoggedIn, logoutUser } from './composables/useAuth';
 import Toolbar from 'primevue/toolbar';
 import Button from 'primevue/button';
 import { useRouter } from "vue-router"
- 
+
+
 const router = useRouter();
 </script>
 
@@ -12,23 +13,23 @@ const router = useRouter();
   <Toolbar>
     <template #start>
       <Button icon="pi pi-upload" severity="primary" text />
-      <Button severity="secondary" label="Silverskiedens auktion" @click="router.push('/')"/>
+      <Button :style="{ fontFamily: 'Playfair Display, serif' }" severity="secondary" label="Silverskiedens auktion" @click="router.push('/')"/>
     </template>
 
     <template #center>
-       <Button label="Create Lot" 
-      class="mr-2" severity="primary" @click="router.push('/create-lot')"/>
-       <Button label="Lots" 
-      class="mr-2" severity="primary" @click="router.push('/lots')"/>
-       <Button label="Auctions" 
+       <Button :style="{ fontFamily: 'Playfair Display, serif' }" label="Auktioner" 
       class="mr-2" severity="primary" @click="router.push('/auctions')"/>
     </template>
 
     <template #end>
+        <Button :style="{ fontFamily: 'Playfair Display, serif' }" label="Registrera föremål" 
+      class="mr-2" severity="primary" @click="router.push('/create-lot')"/>
+       <Button :style="{ fontFamily: 'Playfair Display, serif' }" label="Föremål" 
+      class="mr-10" severity="primary" @click="router.push('/lots')"/>
       <RouterLink v-if="!isLoggedIn" to="/login">
-        <Button severity="primary" label="Login"></Button>
+        <Button :style="{ fontFamily: 'Playfair Display, serif' }" severity="primary" label="Login"></Button>
       </RouterLink>
-      <Button v-else label="Logout" @click="logoutUser(); router.push('/login')" />
+      <Button v-else :style="{ fontFamily: 'Playfair Display, serif' }" label="Logout" @click="logoutUser(); router.push('/login')" />
     </template>
     
   </Toolbar>

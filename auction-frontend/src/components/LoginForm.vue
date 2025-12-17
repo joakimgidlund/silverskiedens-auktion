@@ -58,13 +58,13 @@ async function login(userInfo) {
         <Form v-slot="$form" ref="formRef" @submit="onFormSubmit" :validateOnUpdate="true"
             class="flex justify-center flex-col gap-4">
             <div class="flex flex-col gap-1">
-                <InputText name="username" type="text" placeholder="Username" fluid />
+                <InputText name="username" type="text" placeholder="Användarnamn" fluid />
             </div>
             <div class="flex flex-col gap-1">
-                <Password type="text" name="password" placeholder="Password" :feedback="false" toggleMask fluid />
+                <Password type="text" name="password" placeholder="Lösenord" :feedback="false" toggleMask fluid />
             </div>
             <Message v-if="badAuth" severity="error">Could not find those credentials.</Message>
-            <Button class="w-1/4 ml-auto" type="submit" severity="primary" label="Login" />
+            <Button class="w-1/4 ml-auto" type="submit" severity="primary" label="Logga in" />
         </Form>
     </div>
 </template>
