@@ -36,7 +36,8 @@ async function login(userInfo) {
         if (!resp.ok) {
             throw new Error(`Response: ${resp.status}`)
         }
-        const jwt = await resp.text();
+        const data = await resp.json();
+        const jwt = data.token;
         loginUser(jwt);
         badAuth.value = false;
         toast.add({
