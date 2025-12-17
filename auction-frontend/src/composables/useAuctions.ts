@@ -15,8 +15,10 @@ export function useAuctions() {
         method: "GET",
         credentials: "include",
       });
+      const data = await res.json();
       if (!res.ok) throw new Error("Failed to fetch auctions");
-      auctions.value = await res.json();
+      auctions.value = data;
+
     } catch (e) {
       error.value = (e as Error).message;
     } finally {

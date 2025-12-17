@@ -60,6 +60,9 @@ export function useLots() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        title: lot.title,
+        description: lot.description,
+        imagePath: lot.imagePath,
         published: !lot.published,
       }),
     });

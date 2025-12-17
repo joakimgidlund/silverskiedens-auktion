@@ -15,8 +15,15 @@ public class AuctionLotDTO {
 
     public AuctionLotDTO(){}
 
-    public AuctionLotDTO(Long id, Instant endTime, BigDecimal estimate, BigDecimal currentBid, Long lotId, String title, String description, String imagePath) {
-
+    public AuctionLotDTO(Long auctionId, Instant endTime, BigDecimal estimate, BigDecimal currentBid, Long lotId, String title, String description, String imagePath) {
+        this.auctionId = auctionId;
+        this.endTime = endTime;
+        this.estimate = estimate;
+        this.currentBid = currentBid;
+        this.lotId = lotId;
+        this.title = title;
+        this.description = description;
+        this.imagePath = imagePath;
     }
 
     public Long getAuctionId() {
@@ -81,5 +88,19 @@ public class AuctionLotDTO {
 
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
+    }
+
+    @Override
+    public String toString() {
+        return "AuctionLotDTO{" +
+                "auctionId=" + auctionId +
+                ", estimate=" + estimate +
+                ", currentBid=" + currentBid +
+                ", endTime=" + endTime +
+                ", lotId=" + lotId +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", imagePath='" + imagePath + '\'' +
+                '}';
     }
 }

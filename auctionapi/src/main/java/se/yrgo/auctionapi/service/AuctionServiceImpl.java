@@ -39,8 +39,9 @@ public class AuctionServiceImpl implements AuctionService{
 
     @Override
     public List<AuctionLotDTO> allAuctionsWithLotInfo() {
-        List<Auction> auctions = auctionRepository.findAll();
-        return auctions.stream().map(this::toAuctionLotDto).toList();
+        List<Auction> auctions = auctionRepository.findAllWithLot();
+        List<AuctionLotDTO> dtos = auctions.stream().map(this::toAuctionLotDto).toList();
+        return dtos;
     }
 
     @Override
@@ -116,16 +117,22 @@ public class AuctionServiceImpl implements AuctionService{
     }
 
     private AuctionLotDTO toAuctionLotDto(Auction auction) {
+
         Lot lot = auction.getLot();
+
+        if (lot == null) {
+            System.out.println("Lot is null for auction " + auction.getId());
+        }
+
         return new AuctionLotDTO(
                 auction.getId(),
                 auction.getEndTime(),
                 auction.getEstimate(),
                 auction.getCurrentBid(),
-                lot.getId(),
-                lot.getTitle(),
-                lot.getDescription(),
-                lot.getImagePath()
+                lot != null ? lot.getId() : null,
+                lot != null ? lot.getTitle() : null,
+                lot != null ? lot.getDescription() : null,
+                lot != null ? lot.getImagePath() : null
         );
     }
 

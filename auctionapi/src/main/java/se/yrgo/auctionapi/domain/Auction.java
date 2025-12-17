@@ -12,7 +12,7 @@ public class Auction {
     private Long id;
     private BigDecimal estimate;
     private BigDecimal currentBid;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name= "lot_id")
     private Lot lot;
     private Instant endTime;
