@@ -28,6 +28,6 @@ public interface AuctionService {
 
     void deleteAuction(Long id);
 
-    void placeBid(Long auctionId, Long userId, BigDecimal bidAmount, Instant timestamp);
+    void placeBid(Long auctionId, Long userId, BigDecimal bidAmount);
 
 }

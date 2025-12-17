@@ -1,6 +1,6 @@
 import { ref } from "vue";
 import type { AuctionLot } from "../types/AuctionLot";
-import { isLoggedIn } from "./useAuth";
+import { isLoggedIn, token } from "./useAuth";
 
 export function useAuctions() {
   const auctions = ref<AuctionLot[]>([]);
@@ -29,12 +29,13 @@ export function useAuctions() {
   const placeBid = async (auctionId: number, amount: number) => {
     if (!isLoggedIn.value) throw new Error("User not logged in");
     try {
-      const res = await fetch(`/bids/place-bid`, {
+      const res = await fetch(`/bids/${auctionId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${token.value}`
         },
-        body: JSON.stringify({ auctionId, bidAmount: amount }),
+        body: JSON.stringify({ bidAmount: amount }),
       });
       if (!res.ok) {
         const data = await res.json();

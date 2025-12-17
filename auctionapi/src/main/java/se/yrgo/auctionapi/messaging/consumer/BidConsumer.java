@@ -18,7 +18,6 @@ public class BidConsumer {
         auctionService.placeBid(
                 message.getAuctionId(),
                 message.getUserId(),
-                message.getBidAmount(),
-                message.getTimestamp());
+                message.getBidAmount());
     }
 }

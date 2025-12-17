@@ -44,7 +44,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody AuthRequest authRequest, HttpServletResponse response) {
+    public ResponseEntity<Map<String, String>> login(@RequestBody AuthRequest authRequest, HttpServletResponse response) {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -62,10 +62,10 @@ public class UserController {
                         .build();
 
             response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
-            return new ResponseEntity<>("Login successful.", HttpStatus.OK);
+            return ResponseEntity.ok(Map.of("token", token));
 
         } catch (AuthenticationException ex) {
-            return new ResponseEntity<>("Unauthorized.", HttpStatus.UNAUTHORIZED);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Unauthorized"));
         }
     }
 

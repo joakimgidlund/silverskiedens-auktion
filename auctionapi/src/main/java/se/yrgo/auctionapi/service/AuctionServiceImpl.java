@@ -87,7 +87,7 @@ public class AuctionServiceImpl implements AuctionService{
 
     @Override
     @Transactional
-    public void placeBid(Long auctionId, Long userId, BigDecimal bidAmount, Instant timestamp) {
+    public void placeBid(Long auctionId, Long userId, BigDecimal bidAmount) {
         if (auctionId == null || userId == null || bidAmount == null) {
             throw new IllegalArgumentException("Invalid bid data");
         }
@@ -109,7 +109,7 @@ public class AuctionServiceImpl implements AuctionService{
         bid.setAuction(auction);
         bid.setUserId(userId);
         bid.setBidAmount(bidAmount);
-        bid.setTimestamp(timestamp);
+        bid.setTimestamp(Instant.now());
         bidRepository.save(bid);
         auction.setCurrentBid(bidAmount);
         auctionRepository.save(auction);
