@@ -1,4 +1,4 @@
-package se.yrgo.auctionapi.config;
+package se.yrgo.bidbroker.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,8 +21,6 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auctions/create-auction").hasRole("ADMIN")
-                        .requestMatchers("/auctions/**").permitAll()
                         .anyRequest().authenticated())
                 .oauth2ResourceServer(oauth -> oauth
                         .bearerTokenResolver(cookieBearerTokenResolver())
