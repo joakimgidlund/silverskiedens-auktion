@@ -54,7 +54,7 @@ async function login(userInfo) {
 </script>
 
 <template>
-    <div class="w-1/6 mx-auto">
+    <div class="w-100 mx-auto">
         <Form v-slot="$form" ref="formRef" @submit="onFormSubmit" :validateOnUpdate="true"
             class="flex justify-center flex-col gap-4">
             <div class="flex flex-col gap-1">
