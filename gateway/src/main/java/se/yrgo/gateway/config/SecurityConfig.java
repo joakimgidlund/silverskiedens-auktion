@@ -1,5 +1,7 @@
 package se.yrgo.gateway.config;
 
+import java.util.List;
+
 import javax.crypto.SecretKey;
 
 import org.springframework.context.annotation.Bean;
@@ -9,9 +11,14 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+import org.springframework.security.oauth2.server.resource.web.BearerTokenResolver;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.Cookie;
 
 @Configuration
 @EnableWebSecurity
@@ -22,11 +29,14 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain security(HttpSecurity http) throws Exception {
         http
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll()
                         .anyRequest().authenticated())
-                .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
+                .oauth2ResourceServer(oauth2 -> oauth2
+                        .bearerTokenResolver(bearerTokenResolver())
+                        .jwt(Customizer.withDefaults()));
 
         return http.build();
     }
@@ -36,5 +46,40 @@ public class SecurityConfig {
         byte[] keyBytes = SECRET.getBytes();
         SecretKey key = Keys.hmacShaKeyFor(keyBytes);
         return NimbusJwtDecoder.withSecretKey(key).build();
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+
+        // Frontend origins
+        config.setAllowedOrigins(List.of("http://localhost:8085"));
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowedHeaders(List.of("*"));
+        config.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return source;
+    }
+
+    @Bean
+    public BearerTokenResolver bearerTokenResolver() {
+        return request -> {
+            String path = request.getRequestURI();
+            if (path.startsWith("/auth/")) {
+                return null; // skip JWT auth
+            }
+
+            // Otherwise, get JWT from cookie
+            if (request.getCookies() != null) {
+                for (Cookie cookie : request.getCookies()) {
+                    if ("access_token".equals(cookie.getName())) {
+                        return cookie.getValue();
+                    }
+                }
+            }
+            return null;
+        };
     }
 }

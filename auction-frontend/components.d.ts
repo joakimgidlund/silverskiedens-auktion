@@ -22,6 +22,5 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Toast: typeof import('primevue/toast')['default']
-    Toolbar: typeof import('primevue/toolbar')['default']
   }
 }

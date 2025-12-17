@@ -13,7 +13,6 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
 @RestController
 @RequestMapping("/bids")
 public class BidController {

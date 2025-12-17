@@ -11,7 +11,7 @@ export function useLots() {
         error.value = null;
 
         try {
-            const res = await fetch("http://localhost:8080/lots");
+            const res = await fetch("/lots");
             if (!res.ok) throw new Error("Failed to fetch lots");
             const data = await res.json()
             return data
@@ -27,7 +27,7 @@ export function useLots() {
         error.value = null;
 
         try {
-            const res = await fetch("http://localhost:8080/lots/create-lot", {
+            const res = await fetch("/lots/create-lot", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ title, 
@@ -46,7 +46,7 @@ export function useLots() {
     };
 
     const publishLot = async (lot: Lot) => {
-        await fetch(`http://localhost:8080/lots/${lot.id}`, {
+        await fetch(`/lots/${lot.id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
