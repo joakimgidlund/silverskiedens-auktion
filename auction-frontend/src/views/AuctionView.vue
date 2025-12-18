@@ -60,19 +60,24 @@ async function bidHandler(id: number, amount: number) {
   }
 }
 
+function onImageError(event: Event) {
+  const img = event.target as HTMLImageElement;
+  img.src = '/img/silverspoon.avif';
+}
 </script>
 
 <template>
   <div class="p-4 w-3/4">
     <h2 class="text-2xl" :style="{ fontFamily: 'Playfair Display, serif' }">Auktioner</h2>
-    <DataView :value="auctions">
+    <DataView :value="auctions" v-if="auctions.some(a => a.published)">
       <template #list="slotProps">
         <div class="flex flex-col">
           <div v-for="(item, index) in slotProps.items" :key="item.auctionId">
             <div v-if="item.published" class="flex flex-col sm:flex-row sm:items-center p-6 gap-4"
               :class="{ 'border-t border-surface-200 dark:border-surface-700': index !== 0 }">
               <div class="md:w-40 relative">
-                <img class="block xl:block mx-auto rounded w-full" :src="`${item.imagePath}`" :alt="item.name" />
+                <img class="block xl:block mx-auto rounded w-full" :src="`${item.imagePath}`" :alt="item.name"
+                  @error="onImageError" />
               </div>
               <div class="flex flex-col md:flex-row justify-between md:items-center flex-1 gap-6">
                 <div class="flex flex-row md:flex-col justify-between items-start gap-2">
@@ -103,6 +108,8 @@ async function bidHandler(id: number, amount: number) {
       </template>
     </DataView>
 
-    <div v-if="error" class="p-mt-4 p-text-red-600">{{ error }}</div>
+    <div class="flex flex-row gap-5 mt-2 text-center justify-center" v-if="auctions.filter(a => a.published).length === 0">
+      <h1 :style="{ fontFamily: 'Playfair Display, serif' }">Inga auktioner publicerade.</h1>
+    </div>
   </div>
 </template>

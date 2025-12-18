@@ -49,24 +49,30 @@ async function handleDelete(event: PointerEvent, lot: Lot) {
 </script>
 
 <template>
-  <DataView :value="lots">
+  <DataView :value="lots" class="w-1/3" v-if="lots.length > 0">
     <template #list="slotProps">
       <div class="flex flex-col">
         <div v-for="(lot, index) in slotProps.items" :key="index">
-          <div class="flex flex-col sm:flex-row sm:items-center p-6 gap-4"
+          <div class="flex flex-col sm:flex-row sm:items-center p-4 gap-2"
             :class="{ 'border-t border-surface-200 dark:border-surface-700': index !== 0 }">
-            <div class="flex flex-col md:flex-row justify-between md:items-center flex-1 gap-6">
-              <div class="flex flex-row md:flex-col justify-between items-start gap-2">
-                <div>
-                  <span class="font-medium text-surface-500 dark:text-surface-400 text-sm">{{ lot.description
-                  }}</span>
-                  <div class="text-lg font-medium mt-2">{{ lot.title }}</div>
+            <div class="w-full grid grid-cols-1 sm:grid-cols-[1fr_auto] items-center p-6 gap-6">
+              <div class="text-left min-w-0">
+                <span class="block font-medium text-surface-500 dark:text-surface-400 text-sm">
+                  {{ lot.description }}
+                </span>
+                <div class="text-lg font-medium mt-2">
+                  {{ lot.title }}
                 </div>
               </div>
               <div class="flex flex-col md:items-end gap-8">
                 <div class="flex flex-col gap-2">
-                  <Button :label="lot.published ? 'Dra ut' : 'Publicera'" :loading="loading"
-                    :disabled="loading" @click="publishLot(lot)" />
+                  <Button :loading="loading" :disabled="loading" @click="publishLot(lot)">
+                    <span class="invisible">
+                      Publicera
+                    </span>
+                    <span class="absolute inset-0 flex items-center justify-center">
+                      {{ lot.published ? 'Dra ut' : 'Publicera' }}
+                    </span></Button>
                   <Button label="Ta bort" severity="danger" :loading="loading" :disabled="loading"
                     @click="handleDelete($event, lot)" />
                 </div>
@@ -78,4 +84,7 @@ async function handleDelete(event: PointerEvent, lot: Lot) {
     </template>
   </DataView>
   <ConfirmPopup></ConfirmPopup>
+  <div class="flex flex-row gap-5 mt-2 text-center" v-if="lots.length === 0">
+    <h1 :style="{ fontFamily: 'Playfair Display, serif' }">Inga föremål i registret.</h1>
+  </div>
 </template>
