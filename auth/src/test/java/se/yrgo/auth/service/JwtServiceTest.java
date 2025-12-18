@@ -35,7 +35,7 @@ class JwtServiceTest {
     }
 
     @Test
-    void generateToken_userExists_generatesReadableJwt() {
+    void testGenerateToken() {
         UserInfo user = new UserInfo();
         user.setId(42L);
         user.setUsername("alice");
@@ -63,7 +63,7 @@ class JwtServiceTest {
     }
 
     @Test
-    void generateToken_userDoesNotExist_throwsException() {
+    void testUserNotFound() {
         when(userRepository.findByUsername("missing"))
                 .thenReturn(Optional.empty());
 

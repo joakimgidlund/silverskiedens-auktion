@@ -30,7 +30,7 @@ class UserInfoServiceTest {
     UserInfoService userInfoService;
 
     @Test
-    void loadUserByUsername_userExists_returnsUserDetails() {
+    void testLoadUserByUsername() {
         UserInfo user = new UserInfo();
         user.setUsername("john");
         user.setPassword("encoded-password");
@@ -49,7 +49,7 @@ class UserInfoServiceTest {
     }
 
     @Test
-    void loadUserByUsername_userDoesNotExist_throwsException() {
+    void testLoadUserByUsernameThrows() {
         when(repository.findByUsername("missing"))
                 .thenReturn(Optional.empty());
 
@@ -59,7 +59,7 @@ class UserInfoServiceTest {
     }
 
     @Test
-    void addUser_newUser_encodesPasswordAndSaves() {
+    void testAddNewUser() {
         UserInfo user = new UserInfo();
         user.setUsername("alice");
         user.setPassword("plainPassword");
@@ -79,7 +79,7 @@ class UserInfoServiceTest {
     }
 
     @Test
-    void addUser_existingUser_doesNotSave() {
+    void testAddExistingUser() {
         UserInfo user = new UserInfo();
         user.setUsername("bob");
 
