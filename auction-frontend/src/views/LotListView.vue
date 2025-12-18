@@ -49,42 +49,45 @@ async function handleDelete(event: PointerEvent, lot: Lot) {
 </script>
 
 <template>
-  <DataView :value="lots" class="w-1/3" v-if="lots.length > 0">
-    <template #list="slotProps">
-      <div class="flex flex-col">
-        <div v-for="(lot, index) in slotProps.items" :key="index">
-          <div class="flex flex-col sm:flex-row sm:items-center p-4 gap-2"
-            :class="{ 'border-t border-surface-200 dark:border-surface-700': index !== 0 }">
-            <div class="w-full grid grid-cols-1 sm:grid-cols-[1fr_auto] items-center p-6 gap-6">
-              <div class="text-left min-w-0">
-                <span class="block font-medium text-surface-500 dark:text-surface-400 text-sm">
-                  {{ lot.description }}
-                </span>
-                <div class="text-lg font-medium mt-2">
-                  {{ lot.title }}
+  <div class="p-4 w-1/3">
+    <h2 class="text-2xl" :style="{ fontFamily: 'Playfair Display, serif' }">Föremål</h2>
+    <DataView :value="lots" class="w-full" v-if="lots.length > 0">
+      <template #list="slotProps">
+        <div class="flex flex-col">
+          <div v-for="(lot, index) in slotProps.items" :key="index">
+            <div class="flex flex-col sm:flex-row sm:items-center p-4 gap-2"
+              :class="{ 'border-t border-surface-200 dark:border-surface-700': index !== 0 }">
+              <div class="w-full grid grid-cols-1 sm:grid-cols-[1fr_auto] items-center p-6 gap-6">
+                <div class="text-left min-w-0">
+                  <span class="block font-medium text-surface-500 dark:text-surface-400 text-sm">
+                    {{ lot.description }}
+                  </span>
+                  <div class="text-lg font-medium mt-2">
+                    {{ lot.title }}
+                  </div>
                 </div>
-              </div>
-              <div class="flex flex-col md:items-end gap-8">
-                <div class="flex flex-col gap-2">
-                  <Button :loading="loading" :disabled="loading" @click="publishLot(lot)">
-                    <span class="invisible">
-                      Publicera
-                    </span>
-                    <span class="absolute inset-0 flex items-center justify-center">
-                      {{ lot.published ? 'Dra ut' : 'Publicera' }}
-                    </span></Button>
-                  <Button label="Ta bort" severity="danger" :loading="loading" :disabled="loading"
-                    @click="handleDelete($event, lot)" />
+                <div class="flex flex-col md:items-end gap-8">
+                  <div class="flex flex-col gap-2">
+                    <Button :loading="loading" :disabled="loading" @click="publishLot(lot)">
+                      <span class="invisible">
+                        Publicera
+                      </span>
+                      <span class="absolute inset-0 flex items-center justify-center">
+                        {{ lot.published ? 'Dra ut' : 'Publicera' }}
+                      </span></Button>
+                    <Button label="Ta bort" severity="danger" :loading="loading" :disabled="loading"
+                      @click="handleDelete($event, lot)" />
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </template>
-  </DataView>
-  <ConfirmPopup></ConfirmPopup>
-  <div class="flex flex-row gap-5 mt-2 text-center" v-if="lots.length === 0">
-    <h1 :style="{ fontFamily: 'Playfair Display, serif' }">Inga föremål i registret.</h1>
+      </template>
+    </DataView>
+    <ConfirmPopup></ConfirmPopup>
+    <div class="flex flex-row gap-5 mt-2 text-center" v-if="lots.length === 0">
+      <h1 :style="{ fontFamily: 'Playfair Display, serif' }">Inga föremål i registret.</h1>
+    </div>
   </div>
 </template>

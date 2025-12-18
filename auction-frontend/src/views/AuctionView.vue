@@ -67,7 +67,7 @@ function onImageError(event: Event) {
 </script>
 
 <template>
-  <div class="p-4 w-3/4">
+  <div class="p-4 w-1/2">
     <h2 class="text-2xl" :style="{ fontFamily: 'Playfair Display, serif' }">Auktioner</h2>
     <DataView :value="auctions" v-if="auctions.some(a => a.published)">
       <template #list="slotProps">
