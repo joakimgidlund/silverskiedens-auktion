@@ -6,10 +6,12 @@ import { isLoggedIn } from "../composables/useAuth";
 import Button from "primevue/button";
 import DataView from "primevue/dataview";
 import type { Form, FormSubmitEvent } from "@primevue/forms";
+import { useToast } from "primevue/usetoast";
 
 const { auctions, loadAuctions, placeBid } = useAuctions();
 const loading = ref(false);
 const error = ref<string | null>(null);
+const toast = useToast()
 // const bidAmounts = ref<Record<number, number>>({})
 
 onMounted(async () => {
@@ -25,7 +27,11 @@ function submitBid(form: FormSubmitEvent, auction: AuctionLot) {
   const bidAmount = form.values.bid;
 
   if (!bidAmount || bidAmount <= auction.currentBid) {
-    alert("Skriv in en giltig summa");
+    toast.add({
+      summary: "Skriv in en giltig summa.",
+      life: 5 * 1000,
+      severity: "error"
+    });
     return;
   }
 
@@ -37,7 +43,11 @@ function submitBid(form: FormSubmitEvent, auction: AuctionLot) {
 async function bidHandler(id: number, amount: number) {
   try {
     await placeBid(id, amount);
-    alert("Bud lagt!");
+    toast.add({
+      summary: "Bud lagt!",
+      life: 5 * 1000,
+      severity: "success"
+    });
     await loadAuctions();
   } catch (e) {
     error.value = (e as Error).message;
