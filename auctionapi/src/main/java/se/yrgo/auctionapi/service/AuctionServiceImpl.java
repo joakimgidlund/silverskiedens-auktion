@@ -132,7 +132,8 @@ public class AuctionServiceImpl implements AuctionService{
                 lot != null ? lot.getId() : null,
                 lot != null ? lot.getTitle() : null,
                 lot != null ? lot.getDescription() : null,
-                lot != null ? lot.getImagePath() : null
+                lot != null ? lot.getImagePath() : null,
+                lot != null ? lot.isPublished() : null
         );
     }
 

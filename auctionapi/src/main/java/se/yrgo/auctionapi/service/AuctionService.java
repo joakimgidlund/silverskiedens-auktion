@@ -6,7 +6,6 @@ import se.yrgo.auctionapi.dto.CreateAuctionDTO;
 import se.yrgo.auctionapi.dto.UpdateAuctionDTO;
 
 import java.math.BigDecimal;
-import java.time.Instant;
 import java.util.List;
 
 public interface AuctionService {

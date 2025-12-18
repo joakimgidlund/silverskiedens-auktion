@@ -7,4 +7,5 @@ export interface AuctionLot {
     estimate: number;
     currentBid: number;
     endTime: string;
+    published: boolean;
 }

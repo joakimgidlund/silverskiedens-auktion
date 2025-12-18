@@ -12,10 +12,13 @@ public class AuctionLotDTO {
     private String title;
     private String description;
     private String imagePath;
+    private boolean published;
 
-    public AuctionLotDTO(){}
+    public AuctionLotDTO() {
+    }
 
-    public AuctionLotDTO(Long auctionId, Instant endTime, BigDecimal estimate, BigDecimal currentBid, Long lotId, String title, String description, String imagePath) {
+    public AuctionLotDTO(Long auctionId, Instant endTime, BigDecimal estimate, BigDecimal currentBid, Long lotId,
+            String title, String description, String imagePath, boolean published) {
         this.auctionId = auctionId;
         this.endTime = endTime;
         this.estimate = estimate;
@@ -24,6 +27,7 @@ public class AuctionLotDTO {
         this.title = title;
         this.description = description;
         this.imagePath = imagePath;
+        this.published = published;
     }
 
     public Long getAuctionId() {
@@ -88,6 +92,14 @@ public class AuctionLotDTO {
 
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
+    }
+
+    public boolean isPublished() {
+        return published;
+    }
+
+    public void setPublished(boolean published) {
+        this.published = published;
     }
 
     @Override
