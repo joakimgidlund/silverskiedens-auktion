@@ -6,11 +6,14 @@ import jakarta.transaction.Transactional;
 import se.yrgo.auctionapi.data.AuctionRepository;
 import se.yrgo.auctionapi.data.BidRepository;
 import se.yrgo.auctionapi.data.LotRepository;
+import se.yrgo.auctionapi.domain.Auction;
 import se.yrgo.auctionapi.domain.Lot;
 import se.yrgo.auctionapi.dto.CreateLotDTO;
 import se.yrgo.auctionapi.dto.LotDTO;
 import se.yrgo.auctionapi.dto.UpdateLotDTO;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Service
@@ -41,6 +44,12 @@ public class LotServiceImpl implements LotService {
         lot.setImagePath(dto.getImagePath());
         lot.setPublished(dto.isPublished());
         Lot saved = lotRepository.save(lot);
+        Auction relatedAuction = new Auction();
+        relatedAuction.setLot(saved);
+        relatedAuction.setEstimate(dto.getEstimate());
+        relatedAuction.setCurrentBid(dto.getEstimate());
+        relatedAuction.setEndTime(Instant.now().plus(30, ChronoUnit.DAYS));
+        auctionRepository.save(relatedAuction);
         return toDto(saved);
     }
 

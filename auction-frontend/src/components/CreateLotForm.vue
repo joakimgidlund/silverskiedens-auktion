@@ -7,7 +7,7 @@ const { createLot } = useLots();
 const toast = useToast();
 
 const onFormSubmit = async ($form: FormSubmitEvent) => {
-    await createLot($form.values.title, $form.values.description, $form.values.image);
+    await createLot($form.values.title, $form.values.description, $form.values.image, $form.values.estimate);
     toast.add({
         summary: "Föremål skapat.",
         life: 5 * 1000,
@@ -32,6 +32,11 @@ const onFormSubmit = async ($form: FormSubmitEvent) => {
             <div class="flex flex-col gap-1">
                 <InputText name="image" placeholder="Bild-URL" />
                 <Message size="small" severity="secondary" variant="simple">Om föremålet ska ha en bild, ange en länk
+                </Message>
+            </div>
+            <div class="flex flex-col gap-1">
+                <InputNumber name="estimate" placeholder="Värdering" />
+                <Message size="small" severity="secondary" variant="simple">Föremålets värdering
                 </Message>
             </div>
             <Button class="w-1/4 ml-auto" type="submit" severity="primary" label="Skapa"></Button>

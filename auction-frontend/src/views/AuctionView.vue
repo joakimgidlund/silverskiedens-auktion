@@ -48,7 +48,10 @@ async function bidHandler(id: number, amount: number) {
       life: 5 * 1000,
       severity: "success"
     });
-    await loadAuctions();
+    const auction = auctions.value.find(a => a.auctionId === id);
+    if (auction) {
+      auction.currentBid = amount;
+    }
   } catch (e) {
     error.value = (e as Error).message;
     console.log(error.value, e);
@@ -65,7 +68,7 @@ async function bidHandler(id: number, amount: number) {
     <DataView :value="auctions">
       <template #list="slotProps">
         <div class="flex flex-col">
-          <div v-for="(item, index) in slotProps.items" :key="index">
+          <div v-for="(item, index) in slotProps.items" :key="item.auctionId">
             <div v-if="item.published" class="flex flex-col sm:flex-row sm:items-center p-6 gap-4"
               :class="{ 'border-t border-surface-200 dark:border-surface-700': index !== 0 }">
               <div class="md:w-40 relative">
@@ -86,8 +89,7 @@ async function bidHandler(id: number, amount: number) {
                   </div>
                   <Form @submit="submitBid($event, item)" class="flex flex-row gap-2">
                     <div class="flex flex-col gap-2">
-                      <InputNumber name="bid" :min="item.currentBid * 1.05" :max="item.currentBid * 5"
-                        placeholder="Ditt bud" />
+                      <InputNumber name="bid" :max="item.currentBid * 5" placeholder="Ditt bud" />
                       <Message size="small" severity="secondary" variant="simple">Lägsta godkända bud är {{
                         item.currentBid * 1.05 }}kr</Message>
                     </div>

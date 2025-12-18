@@ -25,7 +25,8 @@ export function useLots() {
   const createLot = async (
     title: string,
     description: string,
-    imagePath: string
+    imagePath: string,
+    estimate: number
   ) => {
     loading.value = true;
     error.value = null;
@@ -39,6 +40,7 @@ export function useLots() {
           description,
           imagePath,
           published: false,
+          estimate,
         }),
       });
       if (!res.ok) throw new Error("Failed to create lot");

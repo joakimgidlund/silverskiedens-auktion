@@ -1,12 +1,16 @@
 package se.yrgo.auctionapi.dto;
 
+import java.math.BigDecimal;
+
 public class CreateLotDTO {
     private String title;
     private String description;
     private String imagePath;
     private boolean published;
+    private BigDecimal estimate;
 
-    public CreateLotDTO() {}
+    public CreateLotDTO() {
+    }
 
     public String getTitle() {
         return title;
@@ -39,4 +43,13 @@ public class CreateLotDTO {
     public void setPublished(boolean published) {
         this.published = published;
     }
+
+    public BigDecimal getEstimate() {
+        return estimate;
+    }
+
+    public void setEstimate(BigDecimal estimate) {
+        this.estimate = estimate;
+    }
+
 }

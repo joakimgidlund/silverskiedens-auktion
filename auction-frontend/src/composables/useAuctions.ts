@@ -17,7 +17,7 @@ export function useAuctions() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error("Failed to fetch auctions");
-      auctions.value = data;
+      auctions.value = [...data];
 
     } catch (e) {
       error.value = (e as Error).message;
@@ -41,6 +41,7 @@ export function useAuctions() {
         const data = await res.json();
         throw new Error(data.message || "Failed to place bid");
       }
+      
       return await res.json();
     } catch (e) {
       console.error(e);
