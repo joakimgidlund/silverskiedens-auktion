@@ -43,7 +43,7 @@ async function bidHandler(id: number, amount: number) {
     await loadAuctions();
   } catch (e) {
     error.value = (e as Error).message;
-    alert(error.value);
+    console.log(error.value, e);
   } finally {
     loading.value = false;
   }

@@ -21,8 +21,18 @@ public class BidController {
     }
 
     @PostMapping("/{auctionId}")
-    public ResponseEntity<BidResponse> placeBid(@PathVariable Long auctionId, @RequestBody BidRequest request, @AuthenticationPrincipal Jwt jwt) {
-        Long userId = Long.valueOf(jwt.getClaim("user-id"));
+    public ResponseEntity<BidResponse> placeBid(@PathVariable Long auctionId, @RequestBody BidRequest request,
+            @AuthenticationPrincipal Jwt jwt) {
+        Object claim = jwt.getClaim("user-id");
+        Long userId;
+        if (claim instanceof Number) {
+            userId = ((Number) claim).longValue();
+        } else if (claim instanceof String) {
+            userId = Long.valueOf((String) claim);
+        } else {
+            return ResponseEntity.status(500)
+                    .body(new BidResponse("Invalid JWT claim for user-id", false));
+        }
         try {
             bidService.submitBid(auctionId, userId, request.getBidAmount());
             return ResponseEntity.accepted().body(new BidResponse("Bid submitted successfully", true));
