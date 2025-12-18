@@ -4,7 +4,6 @@ import { useLots } from "../composables/useLots";
 import { useConfirm } from "primevue/useconfirm"
 import DataView from "primevue/dataview";
 import Button from "primevue/button"
-import Tag from "primevue/tag"
 import { useToast } from "primevue";
 import type { Lot } from "../types/Lot";
 
@@ -31,40 +30,52 @@ onMounted(async () => {
 async function handleDelete(event: PointerEvent, lot: Lot) {
   confirm.require({
     target: event.currentTarget as HTMLElement,
-    message: "Are you sure want to delete the selected lot?",
+    message: "Är du säker att du vill ta bort det valda föremålet?",
     rejectProps: {
-      label: "Cancel",
+      label: "Avbryt",
       severity: "secondary",
       outlined: true
     },
     acceptProps: {
-      label: "Delete",
+      label: "Ta bort",
       severity: "danger"
     },
     accept: async () => {
       await deleteLot(lot)
-      toast.add({ severity: "info", summary: "Confirmed", detail: "Lot deleted.", life: 3000 })
+      toast.add({ severity: "info", summary: "Bekräftat", detail: "Föremål borttaget.", life: 3000 })
     }
   })
 }
 </script>
 
 <template>
-  <div class="mt-1">
-    <h1 :style="{ fontFamily: 'Playfair Display, serif' }">Alla Föremål</h1>
-    <DataView :value="lots" dataKey="id" :key="lots.length">
-      <template #list="{ items }">
-        <div v-for="lot in items" :key="lot.id" class="p-3 border-bottom flex justify-between align-items-center">
-          <div>
-            <h3>{{ lot.title }}</h3>
-            <p>{{ lot.description }}</p>
-            <Tag :severity="lot.published ? 'success' : 'warning'" :value="lot.published ? 'Publicerad' : 'Utkast'" />
+  <DataView :value="lots">
+    <template #list="slotProps">
+      <div class="flex flex-col">
+        <div v-for="(lot, index) in slotProps.items" :key="index">
+          <div class="flex flex-col sm:flex-row sm:items-center p-6 gap-4"
+            :class="{ 'border-t border-surface-200 dark:border-surface-700': index !== 0 }">
+            <div class="flex flex-col md:flex-row justify-between md:items-center flex-1 gap-6">
+              <div class="flex flex-row md:flex-col justify-between items-start gap-2">
+                <div>
+                  <span class="font-medium text-surface-500 dark:text-surface-400 text-sm">{{ lot.description
+                  }}</span>
+                  <div class="text-lg font-medium mt-2">{{ lot.title }}</div>
+                </div>
+              </div>
+              <div class="flex flex-col md:items-end gap-8">
+                <div class="flex flex-col gap-2">
+                  <Button :label="lot.published ? 'Dra ut' : 'Publicera'" :loading="loading"
+                    :disabled="loading" @click="publishLot(lot)" />
+                  <Button label="Ta bort" severity="danger" :loading="loading" :disabled="loading"
+                    @click="handleDelete($event, lot)" />
+                </div>
+              </div>
+            </div>
           </div>
-          <Button :label="lot.published ? 'Dra ut' : 'Publicera'" @click="publishLot(lot)" />
-          <Button @click="handleDelete($event, lot)" label="Delete" severity="danger" variant="outlined"></Button>
         </div>
-      </template>
-    </DataView>
-    <ConfirmPopup></ConfirmPopup>
-  </div>
+      </div>
+    </template>
+  </DataView>
+  <ConfirmPopup></ConfirmPopup>
 </template>

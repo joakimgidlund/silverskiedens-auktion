@@ -1,6 +1,6 @@
 <script setup lang="ts">
-    import CreateLotForm from "../components/CreateLotForm.vue";
-    import { useRouter } from "vue-router";
+import CreateLotForm from "../components/CreateLotForm.vue";
+import { useRouter } from "vue-router";
 
 const router = useRouter();
 const handleCreated = () => {
@@ -9,5 +9,7 @@ const handleCreated = () => {
 </script>
 
 <template>
-    <CreateLotForm @created="handleCreated"/>
+    <div class="flex flex-row justify-center mt-20">
+        <CreateLotForm @created="handleCreated" />
+    </div>
 </template>
