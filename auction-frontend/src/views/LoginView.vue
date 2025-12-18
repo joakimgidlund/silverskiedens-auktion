@@ -2,5 +2,7 @@
 </script>
 
 <template>
-    <LoginForm />
+    <div class="flex flex-row justify-center mt-30">
+        <LoginForm />
+    </div>
 </template>

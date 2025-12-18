@@ -2,5 +2,7 @@
 </script>
 
 <template>
-    <RegisterForm />
+    <div class="flex flex-row justify-center mt-30">
+        <RegisterForm />
+    </div>
 </template>
