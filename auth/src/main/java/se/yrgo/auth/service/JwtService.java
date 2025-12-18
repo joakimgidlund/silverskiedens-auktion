@@ -1,16 +1,15 @@
 package se.yrgo.auth.service;
 
 import java.util.Date;
-import java.util.Optional;
 
 import javax.crypto.SecretKey;
 
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.Jwts.SIG;
 import io.jsonwebtoken.security.Keys;
-import se.yrgo.auth.entity.UserInfo;
 import se.yrgo.auth.repository.UserRepository;
 
 @Component
@@ -29,22 +28,19 @@ public class JwtService {
     }
 
     public String generateToken(String username) {
-        Date now = new Date();
-        Date expiry = new Date(now.getTime() + 1000 * 60 * 60); // 1 hour
-        var user = repo.findByUsername(username);
-        Long userId;
+        var user = repo.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException(username));
 
-        if(user.isPresent()) {
-            userId = user.get().getId();
+        Date now = new Date();
+        Date expiry = new Date(now.getTime() + 1000 * 60 * 60);
+
         return Jwts.builder()
                 .subject(username)
                 .issuer("auction-api")
                 .issuedAt(now)
                 .expiration(expiry)
-                .claim("user-id", userId)
+                .claim("user-id", user.getId())
                 .signWith(getSignKey(), SIG.HS256)
                 .compact();
-        }
-        return "No userId found";
     }
 }
