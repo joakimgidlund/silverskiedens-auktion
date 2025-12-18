@@ -41,7 +41,7 @@ async function login(userInfo) {
         loginUser(jwt);
         badAuth.value = false;
         toast.add({
-            summary: "Login successful.",
+            summary: "Godkänd inloggning.",
             life: 5 * 1000,
             severity: "success"
         });

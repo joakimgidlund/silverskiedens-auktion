@@ -46,8 +46,8 @@ async function register(registrationData) {
 </script>
 
 <template>
-    <div class="w-1/6 mx-auto">
-        <Form v-slot="$form" :resolver="resolver" :initialValues="initialValues" @submit="onFormSubmit"
+    <div class="w-100 mx-auto">
+        <Form v-slot="$form" @submit="onFormSubmit"
             class="flex justify-center flex-col gap-4">
             <div class="flex flex-col gap-1">
                 <InputText name="username" type="text" placeholder="Användarnamn" />

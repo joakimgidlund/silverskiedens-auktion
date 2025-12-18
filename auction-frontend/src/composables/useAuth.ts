@@ -12,11 +12,3 @@ export function logoutUser() {
   token.value = null;
   isLoggedIn.value = false;
 }
-
-// export function initAuth() {
-//   const savedToken = localStorage.getItem("token");
-//   if (savedToken) {
-//     token.value = savedToken;
-//     isLoggedIn.value = true;
-//   }
-// }
