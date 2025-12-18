@@ -13,8 +13,6 @@ import static org.mockito.Mockito.when;
 
 import java.util.Optional;
 
-import se.yrgo.auctionapi.data.AuctionRepository;
-import se.yrgo.auctionapi.data.BidRepository;
 import se.yrgo.auctionapi.data.LotRepository;
 import se.yrgo.auctionapi.domain.Lot;
 import se.yrgo.auctionapi.dto.LotDTO;
@@ -24,10 +22,7 @@ import se.yrgo.auctionapi.dto.UpdateLotDTO;
 public class LotServiceImplTest {
     @Mock
     private LotRepository lotRepository;
-    @Mock
-    private AuctionRepository auctionRepository;
-    @Mock
-    private BidRepository bidRepository;
+   
 
     @InjectMocks
     private LotServiceImpl lotService;
@@ -62,7 +57,10 @@ public class LotServiceImplTest {
         Long lotId = 2L;
         UpdateLotDTO dto = new UpdateLotDTO();
         when(lotRepository.findById(lotId)).thenReturn(Optional.empty());
-        assertThatThrownBy(() -> lotService.updateLot(lotId, dto)).isInstanceOf(RuntimeException.class);    
+        assertThatThrownBy(() -> lotService.updateLot(lotId, dto)).isInstanceOf(RuntimeException.class)
+            .hasMessage("Lot not found");    
     }
+
+    
 
 }
